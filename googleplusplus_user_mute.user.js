@@ -4,7 +4,7 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.0
+// @version        0.1.2
 // ==/UserScript==
 
 
@@ -72,15 +72,59 @@ function userMute(){
 			return v;
 		}
 	}
-	function insert_unmute_button(t, id, share_id, name){
-		var unmute_html = '<div>' + name + ' <a style="font-size:10px" class="gpp_user_mute_unmute">UNMUTE</a></div>';
-		if( id_match(id, share_id) == 'share' ){
-			unmute_html = '<div>' + name + ' &nbsp;(<span style="font-size:10px" class="gpp_user_mute_unmute">MUTED SHARE &ndash; <a style="font-size:10px" href="https://plus.google.com/' + share_id + '">SEE ORIGINAL POSTER TO UNMUTE</a>' + '</span>)</div>'
+
+	function normalize_language(code){
+		var r;
+		var c = code;
+		
+		c = c.replace(/_/, '-').toLowerCase();
+		if(c.length > 3){
+			c = c.substring(0, 3) + c.substring(3).toUpperCase();
 		}
-		t.after(unmute_html);
-		t.parent().find('.gpp_user_mute_unmute:first').click(function(){
-			if( !t.is(':visible') ){
-				t.fadeIn();
+
+		if(c=='xx-XX'){ r = c }
+		else if(c=='yy-YY'){ r = c }
+		else if(c=='zz-ZZ'){ r = c }
+		else{
+			//Default to English US
+			r = 'en-US';
+		}
+		
+		return r;
+	}
+	function language_dictionary(){
+		var lang = {
+			'unmute' : {
+				'en-US' : 'UNMUTE',
+				'xx-XX' : '_____'
+			},
+			'muted_share' : {
+				'en-US' : 'MUTE SHARE',
+				'xx-XX' : '_____'
+			},
+			'see_original' : {
+				'en-US' : 'SEE ORIGINAL POSTER TO UNMUTE',
+				'xx-XX' : '_____'
+			},
+			'mute_user' : {
+				'en-US' : 'MUTE USER',
+				'xx-XX' : '_____'
+			}
+		}
+		return lang;
+	}
+	function t(key){
+		return LANGUAGE[key][NORMALIZED_LANGUAGE_CODE];
+	}
+	function insert_unmute_button(th, id, share_id, name){
+		var unmute_html = '<div>' + name + ' <a style="font-size:10px" class="gpp_user_mute_unmute">' + t('unmute') + '</a></div>';
+		if( id_match(id, share_id) == 'share' ){
+			unmute_html = '<div>' + name + ' &nbsp;(<span style="font-size:10px" class="gpp_user_mute_unmute">' + t('muted_share') + ' &ndash; <a style="font-size:10px" href="https://plus.google.com/' + share_id + '">' + t('see_original') + '</a>' + '</span>)</div>'
+		}
+		th.after(unmute_html);
+		th.parent().find('.gpp_user_mute_unmute:first').click(function(){
+			if( !th.is(':visible') ){
+				th.fadeIn();
 			}
 			$(this).parent().hide();
 			GM_removeItem('gpp__user_mute_id_' + id);
@@ -97,9 +141,9 @@ function userMute(){
 	function main_loop(){
 		
 		var posts = $('#content .a-f-i-p').each(function(){ 
-			var t = $(this);
-			var user_link = t.find('.a-f-i-do');
-			var share_link = t.find('.a-f-i-u-go a');
+			var th = $(this);
+			var user_link = th.find('.a-f-i-do');
+			var share_link = th.find('.a-f-i-u-go a');
 			var name = user_link.attr('title');
 			var share_id = typeof share_link.attr('oid') != 'undefined' ? share_link.attr('oid') : '';
 			var id = typeof user_link.attr('oid') != 'undefined' ? user_link.attr('oid') : '';
@@ -107,39 +151,44 @@ function userMute(){
 			//GM_removeItem('gpp__user_mute_id_' + id); return;
 			
 			//Set click handlers
-			if( t.find('.gpp_user_mute_mute:first').length == 0 ){
-				t.find('.a-b-f-i-aGdrWb:first').after(' &nbsp;<a style="font-size:10px" class="gpp_user_mute_mute">MUTE USER</a>');
-				t.parent().find('.gpp_user_mute_mute:first').click(function(){
+			if( th.find('.gpp_user_mute_mute:first').length == 0 ){
+				th.find('.a-b-f-i-aGdrWb:first').after(' &nbsp;<a style="font-size:10px" class="gpp_user_mute_mute">' + t('mute_user') + '</a>');
+				th.parent().find('.gpp_user_mute_mute:first').click(function(){
 					//Mute
-					t.fadeOut();
+					th.fadeOut();
 					GM_setValue('gpp__user_mute_id_' + id, '1');
 					//Muted, so insert unmute button
-					if( t.parent().find('.gpp_user_mute_unmute:first').length == 0 ){
-						insert_unmute_button(t, id, share_id, name);
+					if( th.parent().find('.gpp_user_mute_unmute:first').length == 0 ){
+						insert_unmute_button(th, id, share_id, name);
 					}
-					t.parent().find('.gpp_user_mute_unmute').parent().show();
+					th.parent().find('.gpp_user_mute_unmute').parent().show();
 				});
 			}
 			
 			//Check storage to find out if state == muted
 			if( id_match(id, share_id) ){
-				if( t.is(':visible') ){
-					t.hide();
+				if( th.is(':visible') ){
+					th.hide();
 				}
-				if( !t.is(':visible') ){
-					t.parent().find('.gpp_user_mute_unmute:first').parent().show();
+				if( !th.is(':visible') ){
+					th.parent().find('.gpp_user_mute_unmute:first').parent().show();
 				}
-				if( t.parent().find('.gpp_user_mute_unmute:first').length == 0 ){
-					insert_unmute_button(t, id, share_id, name);
+				if( th.parent().find('.gpp_user_mute_unmute:first').length == 0 ){
+					insert_unmute_button(th, id, share_id, name);
 				}
 			}else{
-				if( !t.is(':visible') ){
-					t.show();
-					t.parent().find('.gpp_user_mute_unmute:first').parent().hide();
+				if( !th.is(':visible') ){
+					th.show();
+					th.parent().find('.gpp_user_mute_unmute:first').parent().hide();
 				}
 			}
 		});
 	}
+	
+	/****** Before main_loop ******/
+	/*** Constants ***/
+	var NORMALIZED_LANGUAGE_CODE = normalize_language(navigator.language);
+	var LANGUAGE = language_dictionary();
 	
 	/****** Start main_loop ******/
 	setInterval(main_loop, 2000);
