@@ -4,7 +4,7 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.1
+// @version        0.1.2
 // ==/UserScript==
 
 
@@ -99,7 +99,7 @@ function userMute(){
 				'xx-XX' : '_____'
 			},
 			'muted_share' : {
-				'en-US' : 'MUTE SHARE',
+				'en-US' : 'MUTED SHARE',
 				'xx-XX' : '_____'
 			},
 			'see_original' : {

@@ -17,9 +17,9 @@ A user's language of choice can be detected from the browser's language setting.
 
 Translations from the Google+ community are most welcome—crowd-sourcing!. I will do the best I can to add languages as they roll in, and publish extension version updates in a reasonable timeframe.
 
-Please post publicly in a comment on the [googleplusplus_user_mute discussion thread]([https://plus.google.com/u/0/111309687695898923996/posts/EL3ZkWDh7Yy) so translations can be open for improvement from the start.
+Please post comments publicly on the User Mute translation thread [googleplusplus_user_mute discussion thread](https://plus.google.com/111309687695898923996/posts/jdyRNnUZh3a). There's a [link](http://go.wittman.org/g592) there an introduction to using a collaborative Google spreadsheet to record the translations.
 
-Below is the Javascript object literal to hold all the defined translations. Replace each 'xx-XX' : '_____' with the language code and translated word or phrase in a given language.
+For reference, below is the Javascript object literal that will hold all the defined translations.
 
 ```javascript
 {
@@ -28,7 +28,7 @@ Below is the Javascript object literal to hold all the defined translations. Rep
 		'xx-XX' : '_____'
 	},
 	'muted_share' : {
-		'en-US' : 'MUTE SHARE',
+		'en-US' : 'MUTED SHARE',
 		'xx-XX' : '_____'
 	},
 	'see_original' : {
@@ -43,6 +43,10 @@ Below is the Javascript object literal to hold all the defined translations. Rep
 ```
 
 ## Change Log
+
+### Version 0.1.2
+
+- Interface text typo corrected. FIX
 
 ### Version 0.1.1
 
