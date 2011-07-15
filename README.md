@@ -46,7 +46,7 @@ Below is the Javascript object literal to hold all the defined translations. Rep
 
 ### Version 0.1.1
 
-- Extension is functionally, language independent, and translation-ready for interface elements. Only the default language English (en-US) is defined so far.
+- Extension is functionally, language independent, and translation-ready for interface elements. Only the default language English (en-US) is defined so far. NEW
 
 ### Version 0.1.0
 

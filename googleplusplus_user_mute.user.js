@@ -4,7 +4,7 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.2
+// @version        0.1.1
 // ==/UserScript==
 
 
