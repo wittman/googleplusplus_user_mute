@@ -4,7 +4,7 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.2
+// @version        0.1.3
 // ==/UserScript==
 
 
@@ -83,8 +83,8 @@ function userMute(){
 		}
 
 		if(c=='xx-XX'){ r = c }
-		else if(c=='yy-YY'){ r = c }
-		else if(c=='zz-ZZ'){ r = c }
+		else if(c=='sv-SE'){ r = c } //Swedish (Sweden)
+		else if(c=='sv'){ r = 'sv-SE' } //Swedish (Sweden)
 		else{
 			//Default to English US
 			r = 'en-US';
@@ -96,18 +96,22 @@ function userMute(){
 		var lang = {
 			'unmute' : {
 				'en-US' : 'UNMUTE',
+				'sv-SE' : 'VISA MEDDELANDEN',
 				'xx-XX' : '_____'
 			},
 			'muted_share' : {
 				'en-US' : 'MUTED SHARE',
+				'sv-SE' : 'DOLT DELAT MEDDELANDE',
 				'xx-XX' : '_____'
 			},
 			'see_original' : {
 				'en-US' : 'SEE ORIGINAL POSTER TO UNMUTE',
+				'sv-SE' : 'VISA ORIGINALSKRIBENTEN FÖR DET DOLDA MEDDELANDET',
 				'xx-XX' : '_____'
 			},
 			'mute_user' : {
 				'en-US' : 'MUTE USER',
+				'sv-SE' : 'DÖLJ ANVÄNDAREN',
 				'xx-XX' : '_____'
 			}
 		}
