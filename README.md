@@ -44,6 +44,10 @@ For reference, below is the Javascript object literal that will hold all the def
 
 ## Change Log
 
+### Version 0.1.4
+
+- Recent change by Google required an adjustment to detect the user's name and the post ID. User Mute now fully functional again. FIX
+
 ### Version 0.1.3
 
 - Language New language added: sv-SE (Swedish) courtesy of Kim Nilsson https://plus.google.com/109325348412536933420/posts - thank you! NEW

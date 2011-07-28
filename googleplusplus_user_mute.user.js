@@ -4,7 +4,7 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.3
+// @version        0.1.4
 // ==/UserScript==
 
 
@@ -76,7 +76,7 @@ function userMute(){
 	function normalize_language(code){
 		var r;
 		var c = code;
-		
+
 		c = c.replace(/_/, '-').toLowerCase();
 		if(c.length > 3){
 			c = c.substring(0, 3) + c.substring(3).toUpperCase();
@@ -89,7 +89,7 @@ function userMute(){
 			//Default to English US
 			r = 'en-US';
 		}
-		
+
 		return r;
 	}
 	function language_dictionary(){
@@ -143,17 +143,17 @@ function userMute(){
 		return false;
 	}
 	function main_loop(){
-		
+
 		var posts = $('#content .a-f-i-p').each(function(){ 
 			var th = $(this);
-			var user_link = th.find('.a-f-i-do');
-			var share_link = th.find('.a-f-i-u-go a');
-			var name = user_link.attr('title');
+			var user_link = th.find('.a-f-i-go a:first');
+			var share_link = th.find('.a-f-i-u-go a:first');
+			var name = user_link.text();
 			var share_id = typeof share_link.attr('oid') != 'undefined' ? share_link.attr('oid') : '';
 			var id = typeof user_link.attr('oid') != 'undefined' ? user_link.attr('oid') : '';
-			
+
 			//GM_removeItem('gpp__user_mute_id_' + id); return;
-			
+
 			//Set click handlers
 			if( th.find('.gpp_user_mute_mute:first').length == 0 ){
 				th.find('.a-b-f-i-aGdrWb:first').after(' &nbsp;<a style="font-size:10px" class="gpp_user_mute_mute">' + t('mute_user') + '</a>');
@@ -168,7 +168,7 @@ function userMute(){
 					th.parent().find('.gpp_user_mute_unmute').parent().show();
 				});
 			}
-			
+
 			//Check storage to find out if state == muted
 			if( id_match(id, share_id) ){
 				if( th.is(':visible') ){
@@ -188,12 +188,12 @@ function userMute(){
 			}
 		});
 	}
-	
+
 	/****** Before main_loop ******/
 	/*** Constants ***/
 	var NORMALIZED_LANGUAGE_CODE = normalize_language(navigator.language);
 	var LANGUAGE = language_dictionary();
-	
+
 	/****** Start main_loop ******/
 	setInterval(main_loop, 2000);
 }
