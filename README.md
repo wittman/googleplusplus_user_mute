@@ -44,6 +44,10 @@ For reference, below is the Javascript object literal that will hold all the def
 
 ## Change Log
 
+### Version 0.1.5
+
+- Changes made today by Google introduced breaking DOM tree changes. All modules needed updating and are now fixed. FIX
+
 ### Version 0.1.4
 
 - Recent change by Google required an adjustment to detect the user's name and the post ID. User Mute now fully functional again. FIX

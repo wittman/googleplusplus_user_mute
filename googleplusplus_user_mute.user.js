@@ -4,11 +4,11 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.4
+// @version        0.1.5
 // ==/UserScript==
 
 
-function userMute(){
+function userMute(){ // v0.1.5
 	var logging = false;
 
 	function log(txt) {
@@ -144,10 +144,11 @@ function userMute(){
 	}
 	function main_loop(){
 
-		var posts = $('#content .a-f-i-p').each(function(){ 
+		//var posts = $('#content .a-f-i-p').each(function(){ //OLD
+		var posts = $("[id^='update'] > .Wh").each(function(){ //NEW
 			var th = $(this);
-			var user_link = th.find('.a-f-i-go a:first');
-			var share_link = th.find('.a-f-i-u-go a:first');
+			var user_link = th.find('.Xy .rE a:first'); //NEW
+			var share_link = th.find('.Mt .vz a:first'); //NEW
 			var name = user_link.text();
 			var share_id = typeof share_link.attr('oid') != 'undefined' ? share_link.attr('oid') : '';
 			var id = typeof user_link.attr('oid') != 'undefined' ? user_link.attr('oid') : '';
@@ -156,7 +157,7 @@ function userMute(){
 
 			//Set click handlers
 			if( th.find('.gpp_user_mute_mute:first').length == 0 ){
-				th.find('.a-b-f-i-aGdrWb:first').after(' &nbsp;<a style="font-size:10px" class="gpp_user_mute_mute">' + t('mute_user') + '</a>');
+				th.find('.Xy .ao').children(':last').after(' &nbsp;<a style="font-size:10px" class="gpp_user_mute_mute">' + t('mute_user') + '</a>');
 				th.parent().find('.gpp_user_mute_mute:first').click(function(){
 					//Mute
 					th.fadeOut();
@@ -188,15 +189,6 @@ function userMute(){
 			}
 		});
 	}
-
-	/****** Before main_loop ******/
-	/*** Constants ***/
-	var NORMALIZED_LANGUAGE_CODE = normalize_language(navigator.language);
-	var LANGUAGE = language_dictionary();
-
-	/****** Start main_loop ******/
-	setInterval(main_loop, 2000);
-}
 
 
 /****** Load jQuery then callback upon load function ******/
