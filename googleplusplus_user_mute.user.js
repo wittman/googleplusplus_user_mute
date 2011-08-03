@@ -4,11 +4,11 @@
 // @namespace      http://wittman.org/projects/googleplusplus_user_mute
 // @include        *plus.google.com*
 // @description    Mutes all post by specific users.
-// @version        0.1.5
+// @version        0.1.6
 // ==/UserScript==
 
 
-function userMute(){ // v0.1.5
+function userMute(){ // v0.1.6
 	var logging = false;
 
 	function log(txt) {
@@ -189,6 +189,15 @@ function userMute(){ // v0.1.5
 			}
 		});
 	}
+
+	/****** Before main_loop ******/
+	/*** Constants ***/
+	var NORMALIZED_LANGUAGE_CODE = normalize_language(navigator.language);
+	var LANGUAGE = language_dictionary();
+
+	/****** Start main_loop ******/
+	setInterval(main_loop, 2000);
+}
 
 
 /****** Load jQuery then callback upon load function ******/
