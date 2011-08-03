@@ -44,6 +44,10 @@ For reference, below is the Javascript object literal that will hold all the def
 
 ## Change Log
 
+### Version 0.1.6
+
+- Immediate correction to previous version. FIX
+
 ### Version 0.1.5
 
 - Changes made today by Google introduced breaking DOM tree changes. All modules needed updating and are now fixed. FIX
