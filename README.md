@@ -44,6 +44,10 @@ For reference, below is the Javascript object literal that will hold all the def
 
 ## Change Log
 
+### Version 0.2.0
+
+- Critical update needed to work with current state of Google+. Auto-healing (updating for CSS map) implemented. FIX
+
 ### Version 0.1.6
 
 - Immediate correction to previous version. FIX
